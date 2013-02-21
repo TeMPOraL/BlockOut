@@ -5,7 +5,7 @@
 
 ** DONE Fix paths.
 
-** TODO Add HighCharts.js for some interesting stats.
+** DONE Add HighCharts.js for some interesting stats.
 
 ** TODO Deprettify.
 

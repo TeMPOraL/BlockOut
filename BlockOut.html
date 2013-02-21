@@ -14,10 +14,13 @@
     <script type="text/javascript" src="./js/math-utils.js"></script>
     <script type="text/javascript" src="./js/gfx-utils.js"></script>
     <script type="text/javascript" src="./js/blocks-helper.js"></script>
+    <script type="text/javascript" src="./js/chart-helper.js"></script>
     <script type="text/javascript" src="./js/blockout.js"></script>
   </head>
 
   <body>
+    <script type="text/javascript" src="js/highcharts/highcharts.js"></script>
+    <script type="text/javascript" src="js/highcharts/modules/exporting.js"></script>
 
     <center><h1>BlockOut</h1></center>
     <div style="width: 650px; float:left;">
@@ -72,6 +75,9 @@
       <div id="round-label">Runda: <span id="round">&nbsp;</span></div>
       <div id="score-label">Punktów: <span id="score">&nbsp;</span></div>
       <div id="time-label">Pozostały czas: <span id="time">&nbsp;</span></div>
+
+       <div id="chart-score" style="width: 500px; height: 250px; margin: 0 auto"></div>
+       <div id="chart-time" style="width: 500px; height: 250px; margin: 0 auto"></div>
 
     </div>
   </body>

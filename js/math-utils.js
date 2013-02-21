@@ -9,3 +9,8 @@ function rand_range(lo, hi) {
 function cap(val, max) {
     return (val > max) ? max : val;
 }
+
+//LERP
+function lerp(a, b, t) {
+    return a*(1-t) + b*t;
+}

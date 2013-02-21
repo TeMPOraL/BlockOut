@@ -1,7 +1,24 @@
 #+title: Stuff to do
 #+startup: hidestars
 
+* Running TODO
 
-* TODO Fix paths.
+** DONE Fix paths.
 
-* TODO Add HighCharts.js for some interesting stats.
+** TODO Add HighCharts.js for some interesting stats.
+
+** TODO Deprettify
+
+* Reqs
+
+** TODO Multiple rounds
+
+** TODO Time-limit rounds
+
+** TODO Score histogram
+
+** TODO Speed increase on score rising
+
+* Additional
+
+** TODO Audio

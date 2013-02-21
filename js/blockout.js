@@ -312,60 +312,6 @@ function pretty_number(x) {
 /*****************************************************************************************/
 // Rendering
 /*****************************************************************************************/
-
-function render_shadow(canvas, ctx, margin, refresh_flag) {
-    if(CACHE_SHADOW == 0 || refresh_flag) {
-        var cwidth = canvas.width;
-        var cheight = canvas.height;
-        
-        if(CACHE_SHADOW == 0) {
-            var cache = $("<canvas></canvas>");
-            cache.css("display","none");
-            $("body").append(cache);
-            cache.attr('width', cwidth).attr('height', cheight);
-            CACHE_SHADOW = cache.get(0);
-        }
-        
-        var cache_ctx = CACHE_SHADOW.getContext("2d");
-        
-        var sx = 0;
-        var sy = 0;
-        
-        var start = "rgba(0,0,0,0.5)";
-        var end   = "rgba(0,0,0,0)";
-        
-        // top
-        var lingrad = ctx.createLinearGradient(sx,sy,sx,margin);
-        lingrad.addColorStop(0.0, start);
-        lingrad.addColorStop(1.0, end);
-        cache_ctx.fillStyle = lingrad;
-        cache_ctx.fillRect(sx,sy, cwidth-sx, margin);
-        
-        // bottom
-        lingrad = ctx.createLinearGradient(sx,cheight,sy,cheight-margin);
-        lingrad.addColorStop(0.0, start);
-        lingrad.addColorStop(1.0, end);
-        cache_ctx.fillStyle = lingrad;
-        cache_ctx.fillRect(sx,cheight-margin, cwidth-sx, margin);
-        
-        // left
-        lingrad = ctx.createLinearGradient(sx,sy,margin,sy);
-        lingrad.addColorStop(0.0, start);
-        lingrad.addColorStop(1.0, end);
-        cache_ctx.fillStyle = lingrad;
-        cache_ctx.fillRect(sx,sy, margin, cheight-sy);
-        
-        // right
-        lingrad = ctx.createLinearGradient(cwidth,sy,cwidth-margin,sy);
-        lingrad.addColorStop(0.0, start);
-        lingrad.addColorStop(1.0, end);
-        cache_ctx.fillStyle = lingrad
-        cache_ctx.fillRect(cwidth-margin,sy, margin, cheight-sy);
-    }
-    
-    ctx.drawImage(CACHE_SHADOW,0,0);
-}
-
 function render_layer(canvas, ctx, layer, z, outline, depth) {
     var row = "";
     var color;
@@ -539,8 +485,6 @@ function render_pit(canvas, ctx) {
     // transparent overlay layer below shadow
     ctx.fillStyle = "rgba(25,25,25,0.75)";
     ctx.fillRect(0,0, canvas.width, canvas.height);
-
-    render_shadow(canvas, ctx, 100, 0, 1);
 }
 
 /*****************************************************************************************/
@@ -728,7 +672,6 @@ function test_cubes(canvas, ctx) {
     render_cube(canvas, ctx, PIT_WIDTH,PIT_HEIGHT,PIT_DEPTH, 2,3,9, [355,90,50,1.0], faces, outline);
     render_cube(canvas, ctx, PIT_WIDTH,PIT_HEIGHT,PIT_DEPTH, 2,2,9, [355,90,50,1.0], faces, outline);
 
-    render_shadow(canvas, ctx, 100);
 }
 
 function test_layer(canvas, ctx) {
@@ -761,8 +704,6 @@ function test_layer(canvas, ctx) {
     */
     
     render_piece(canvas, ctx, PIT_WIDTH,PIT_HEIGHT,PIT_DEPTH, 0,0,0, PIECES['flat'][0], [0,0,0], PIECE_COLOR);
-    
-    //render_shadow(canvas, ctx, 100);
 }
 
 function test_cache(canvas, ctx) {
@@ -877,7 +818,6 @@ function pause(canvas, ctx) {
                     }
                 }
                 DP += 0.01;
-                if(!PAUSE_WORMS) render_shadow(canvas, ctx, 100);
             }, FRAME_DELAY);
             
             $("#footer").css("display","none");
@@ -892,7 +832,6 @@ function pause(canvas, ctx) {
         
             draw_pit(canvas, ctx, PIT_WIDTH,PIT_HEIGHT,PIT_DEPTH);
             render_layers(canvas, ctx, tmp, 1);
-            render_shadow(canvas, ctx, 100);
         }
         
         $("#score").css("display","none");
@@ -1029,7 +968,6 @@ function play_game(canvas, ctx, start_handler) {
     STATE.refresh_layers_flag = 1;
     reset(canvas, ctx);
     STATE.refresh_layers_flag = 0;
-    STATE.render_shadow_flag = 0;
     
     START = (new Date).getTime();
     ID1 = setInterval(function() { game_loop(canvas, ctx) }, FRAME_DELAY);
@@ -1089,8 +1027,6 @@ function render_frame(canvas, ctx) {
     render_layers(canvas, ctx, LAYERS, STATE.refresh_layers_flag);
     if(STATE.render_piece_flag)
         render_piece(canvas, ctx, PIT_WIDTH,PIT_HEIGHT,PIT_DEPTH, STATE.current_x,STATE.current_y,STATE.current_z, STATE.piece, STATE.current_angles, PIECE_COLOR);
-    //if(STATE.render_shadow_flag)
-    //    render_shadow(canvas, ctx, 100);
 }
 
 function reset(canvas, ctx) {
@@ -1420,15 +1356,5 @@ $(document).ready(function(){
     $("#speed .button").each(function() { if($(this).text().toLowerCase()==SPEED) $(this).addClass("on");});
     $("#speed .button").click(function() { change_speed($(this).get(0)); $("#speed .button").removeClass("on"); $(this).addClass("on"); });
     
-    // custom keys
-    $("#keys .button").click(function() { change_keys(); });
-    
-    $("#keyset .lbl").click(function() { new_key($(this)); });
-    
-    $("#keys_ok").click(function() { LAST_KEY_EL = 0; accept_keys(); save_keys(); set_ui_start(); STATE.setkeys = 0; });
-    $("#keys_cancel").click(function() { LAST_KEY_EL = 0; set_ui_start(); STATE.setkeys = 0; });
-    $("#keys_reset").click(function() { reset_keys(); });
-    
-   
     refresh_column();
 });

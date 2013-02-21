@@ -14,3 +14,9 @@ function cap(val, max) {
 function lerp(a, b, t) {
     return a*(1-t) + b*t;
 }
+
+//COSINE INTERPOLATION (bo tak :P)
+function cerp(a, b, t) {
+    t2 = (1 - Math.cos(t * Math.PI))/2;
+    return lerp(a,b,t2);
+}

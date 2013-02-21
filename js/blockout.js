@@ -818,16 +818,8 @@ function game_loop(canvas, ctx) {
         if(STATE.new_z==0) game_over(canvas, ctx);
         else new_piece(canvas, ctx);
     }
-   
-    // animate
-    // STATE.current_x = STATE.start_x + STATE.progress*(STATE.new_x - STATE.start_x);
-    // STATE.current_y = STATE.start_y + STATE.progress*(STATE.new_y - STATE.start_y);
-    // STATE.current_z = STATE.start_z + STATE.progress*(STATE.new_z - STATE.start_z);
-    
-    // STATE.current_angles[0] = STATE.start_angles[0] + STATE.progress*(STATE.new_angles[0] - STATE.start_angles[0]);
-    // STATE.current_angles[1] = STATE.start_angles[1] + STATE.progress*(STATE.new_angles[1] - STATE.start_angles[1]);
-    // STATE.current_angles[2] = STATE.start_angles[2] + STATE.progress*(STATE.new_angles[2] - STATE.start_angles[2]);
 
+    //animate
     STATE.current_x = lerp(STATE.start_x, STATE.new_x, STATE.progress);
     STATE.current_y = lerp(STATE.start_y, STATE.new_y, STATE.progress);
     STATE.current_z = lerp(STATE.start_z, STATE.new_z, STATE.progress);

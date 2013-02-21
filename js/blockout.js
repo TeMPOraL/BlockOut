@@ -89,6 +89,9 @@ var RESET_SHAPE_CORNER = 2;
 var RESET_SHAPE_PYRAMID_SIDE = 3;
 var RESET_SHAPE_RANDOM = 4;
 
+//timer
+var MAX_ROUND_TIME_SECONDS = 120;
+
     
 /*****************************************************************************************/
 // Pieces
@@ -720,6 +723,8 @@ function play_game(canvas, ctx, start_handler) {
     STATE.time = 0;
     refresh_score();
     refresh_time();
+
+    reset_charts();
     
     STATE.refresh_layers_flag = 1;
     reset(canvas, ctx);
@@ -916,7 +921,7 @@ function refresh_score() {
 }
 
 function refresh_time() {
-    $("#time").text("TAJM");
+    $("#time").text("--");
 }
 
 /*****************************************************************************************/
@@ -962,6 +967,25 @@ function refresh_column() {
         }
         ctx.fillRect(0,top,unit,unit);
     }
+}
+
+//TIMER TOOLS
+function game_start_timer() {
+    start_timer(game_timer_handler);
+}
+
+function game_stop_timer() {
+    stop_timer();
+}
+
+function game_reset_timer() {
+    reset_timer();
+}
+
+function game_timer_handler() {
+    var timeRemaining = MAX_ROUND_TIME_SECONDS - get_timer_value();
+    $('#time').text(pretty_print_time(timeRemaining));
+    //TODO handle signalling game over on game time reaching 0;
 }
 
 /*****************************************************************************************/

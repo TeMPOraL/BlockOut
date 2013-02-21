@@ -1,75 +1,153 @@
-* { padding:0; margin:0 }
-
-html { background:#111; }
-body { font-family:verdana; background:#111; color:#fff; text-shadow:#000 0px 0px 0.1em;  }
-h1 { margin:1em 0 0.5em; color:#fff; font-size:3em; font-variant:small-caps; font-weight:bold; text-shadow:#000 0px 0px 0.3em; letter-spacing:0.04em }
-h3 { color:gold; }
-
-a { text-decoration:none; color:#fff }
-a:hover { text-decoration:underline }
-
-h1 a:hover { text-decoration:none }
-
-.shadow {
-	box-shadow:0px 0px 15px rgba(0,0,0,1); 
-   -moz-box-shadow:0px 0px 15px rgba(0,0,0,1); 
-   -webkit-box-shadow:0px 0px 15px rgba(0,0,0,1);
-   -khtml-box-shadow:0px 0px 15px rgba(0,0,0,1);
-	}
-	
-#fps { display:none }
-
-#screenwrap { height:620px; border:solid 0px red; overflow:hidden }
-#screen, #dummy { padding:3em; background:#000; margin-top:15px }
-
-#dummy { width:500px; height:500px; }
-#dummy { color:orangered }
-
-.hud { position:relative; font-size:1.1em; color:#fff; text-shadow:#000 0px 0px 0.3em; }
-.full { padding:0em; width:500px; height:500px; border:solid 1px #000; }
-
-#message { top:-575px; display:block; }
-#message a, #hs { color:#009FA0 }
-
-#description { background:rgba(60,60,60,0.75); color:#eee; margin:3em 0 2em; padding:1em 0;  }
-#controls {  background:rgba(100,100,100,0.0); padding:1em 0  }
-
-.action { color:yellow }
-
-#over    { top:-400px; display:none; }
-#pause   { top:-40px; display:none; color:#FFF; }
-
-#scorelabel { color:#aaa }
-
-#finalscore { font-size:1.1em }	
-
-#column { display:none; background:transparent; width:15px; height:500px; position:relative; top:-575px; left:-275px; margin-bottom:-500px }
-
-.button { color:#444; 
-	     background:#000;
-		 cursor:pointer;
-         padding:0.2em 0.5em;
-		 font-size:0.66em;
-		 font-weight:bold;
-		 font-family:trebuchet ms;
-
-		 text-shadow:0px 1px 0px #000;
+* {
+    padding : 0;
+    margin : 0;
 }
-		 
-.xb { color:#fff; background:#0a0 url("button-green.png");
-        box-shadow: 	   2px 2px 5px #000;
-        -o-box-shadow:     2px 2px 5px #000;
-        -icab-box-shadow:  2px 2px 5px #000;
-        -khtml-box-shadow: 2px 2px 5px #000;
-        -moz-box-shadow:   2px 2px 5px #000;
-        -webkit-box-shadow:2px 2px 5px #000;
 
-        -moz-border-radius: 2px;
-        -webkit-border-radius: 2px;
-	}
-.red { background:#a00 url("button-red.png"); }	
-.gold { background:#a50 url("button-gold.png"); }	
-.on { color:#fff }
+html {
+    background : #111;
+}
 
-#footer { text-align:center; font-size:0.9em; color:#666; margin:1.5em 0 2em 0 }
-#footer a { color:#888 }
+body {
+    font-family : verdana;
+    background : #111;
+    color : #fff;
+    text-shadow : #000 0px 0px 0.1em;
+}
+h1 {
+    margin : 1em 0 0.5em;
+    color : #fff;
+    font-size : 3em;
+    font-variant : small-caps;
+    font-weight : bold;
+    text-shadow : #000 0px 0px 0.3em;
+    letter-spacing : 0.04em;
+}
+h3 {
+    color : gold;
+}
+
+a {
+    text-decoration : none;
+    color : #fff;
+}
+
+a:hover {
+    text-decoration : underline 
+}
+
+#fps {
+    display : none;
+}
+
+#screenwrap {
+    height : 620px;
+    border : solid 0px red;
+    overflow : hidden;
+}
+#screen, #dummy {
+    padding : 3em;
+    background : #000;
+    margin-top : 15px;
+}
+
+#dummy {
+    width : 500px;
+    height : 500px;
+
+}
+#dummy {
+    color : orangered;
+}
+
+.hud {
+    position : relative;
+    font-size : 1.1em;
+    color : #fff;
+    text-shadow : #000 0px 0px 0.3em;
+
+}
+.full {
+    padding : 0em;
+    width : 500px;
+    height : 500px;
+    border : solid 1px #000;
+
+}
+
+#message {
+    top : -575px;
+    display : block;
+
+}
+#message a, #hs {
+    color : #009FA0;
+}
+
+#description {
+    background : rgba(60,60,60,0.75);
+    color : #eee;
+    margin : 3em 0 2em;
+    padding : 1em 0;
+
+}
+#controls {
+    background : rgba(100,100,100,0.0);
+    padding : 1em 0; 
+}
+
+.action {
+    color : yellow;
+}
+
+#over    {
+    top : -400px;
+    display : none;
+
+}
+#pause   {
+    top : -40px;
+    display : none;
+    color : #FFF;
+
+}
+
+#scorelabel {
+    color : #aaa;
+}
+
+#finalscore {
+    font-size : 1.1em;
+}	
+
+#column {
+    display : none;
+    background : transparent;
+    width : 15px;
+    height : 500px;
+    position : relative;
+    top : -575px;
+    left : -275px;
+    margin-bottom : -500px;
+}
+
+.red {
+    background : #a00 url("button-red.png");
+
+}	
+.gold {
+    background : #a50 url("button-gold.png");
+
+}	
+.on {
+    color : #fff;
+}
+
+#footer {
+    text-align : center;
+    font-size : 0.9em;
+    color : #666;
+    margin : 1.5em 0 2em 0;
+}
+#footer a {
+    color : #888;
+}

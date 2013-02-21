@@ -90,7 +90,9 @@ var RESET_SHAPE_PYRAMID_SIDE = 3;
 var RESET_SHAPE_RANDOM = 4;
 
 //timer
-var MAX_ROUND_TIME_SECONDS = 120;
+var MAX_ROUND_TIME_SECONDS = 10;
+
+var ROUND = 0;
 
     
 /*****************************************************************************************/
@@ -576,9 +578,9 @@ function pause(canvas, ctx) {
             ID2 = setInterval(function() { autofall(canvas, ctx) }, AUTOFALL_DELAY);
         STATE.paused = 0;
         
-        $("#score").css("display","block");
         $("#column").css("display","block");
         $("#pause").css("display","none");
+        game_start_timer();
     }
     else {
         clearTimeout(ID1);
@@ -594,6 +596,7 @@ function pause(canvas, ctx) {
         
         $("#column").css("display","none");
         $("#pause").css("display","block");
+        game_stop_timer();
     }        
 }
 
@@ -724,7 +727,11 @@ function play_game(canvas, ctx, start_handler) {
     refresh_score();
     refresh_time();
 
-    reset_charts();
+    ++ROUND;
+    refresh_round();
+
+    game_reset_timer();
+    game_start_timer();
     
     STATE.refresh_layers_flag = 1;
     reset(canvas, ctx);
@@ -771,6 +778,10 @@ function game_loop(canvas, ctx) {
         else new_piece(canvas, ctx);
     }
 
+    if(STATE.timeout == true) {
+        game_over(canvas, ctx);
+    }
+
     //animate
     STATE.current_x = lerp(STATE.start_x, STATE.new_x, STATE.progress);
     STATE.current_y = lerp(STATE.start_y, STATE.new_y, STATE.progress);
@@ -813,6 +824,8 @@ function reset(canvas, ctx) {
     
     STATE.render_piece_flag = 1;
     STATE.touchdown_flag = 0;
+
+    STATE.timeout = false;
     
     render_frame(canvas, ctx);
 }
@@ -850,6 +863,11 @@ function new_piece(canvas, ctx) {
 function game_over(canvas, ctx) {
     console.log("GAME OVER");
     render_pit(canvas, ctx);
+
+    game_stop_timer();
+    add_score_item(STATE.score);
+    add_time_item(get_timer_value());
+
     end_game(canvas, ctx);
 }
 
@@ -924,6 +942,10 @@ function refresh_time() {
     $("#time").text("--");
 }
 
+function refresh_round() {
+    $("#round").text(ROUND);
+}
+
 /*****************************************************************************************/
 // Keys
 /*****************************************************************************************/
@@ -985,7 +1007,14 @@ function game_reset_timer() {
 function game_timer_handler() {
     var timeRemaining = MAX_ROUND_TIME_SECONDS - get_timer_value();
     $('#time').text(pretty_print_time(timeRemaining));
-    //TODO handle signalling game over on game time reaching 0;
+    if(timeRemaining <= 0) {
+        game_handle_time_out();
+    }
+}
+
+function game_handle_time_out() {
+    game_stop_timer();
+    STATE.timeout = true;
 }
 
 /*****************************************************************************************/
@@ -1005,6 +1034,8 @@ $(document).ready(function(){
     reset_allowed();
     
     init_game_keys(canvas, ctx);
+
+    init_charts();
     
     refresh_column();
 });

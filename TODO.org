@@ -11,7 +11,7 @@
 
 ** TODO Deprettify pause screen.
 
-** TODO Remove / modify / account for all high-score-related stuff.
+** DONE Remove / modify / account for all high-score-related stuff.
 
 * Reqs
 

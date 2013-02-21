@@ -91,7 +91,7 @@ var TEMPLATES = {
 ]
 };
 
-var KEYMAP_DEFAULT = {
+var KEYMAP = {
 "X+" :39, // right
 "X-" :37, // left
 "Y+" :40, // down
@@ -109,8 +109,6 @@ var KEYMAP_DEFAULT = {
 "D"  :32  // space
 };
 
-var KEYMAP = {};    
-var KEYMAP_TMP = {};
 var LAST_KEY_EL = 0;
         
 // generated data
@@ -813,6 +811,7 @@ function game_loop(canvas, ctx) {
     
     STATE.progress = cap(STATE.progress+ELAPSED/ANIM_DURATION, 1);
     
+    //NOTE loosing rules are here
     if(STATE.touchdown_flag && STATE.progress>=1) {
         touchdown();
         if(STATE.new_z==0) game_over(canvas, ctx);
@@ -912,40 +911,13 @@ function autofall(canvas, ctx) {
     }
 }
 
+
+
+
 /*****************************************************************************************/
 // User interface
 /*****************************************************************************************/
-function change_set(el) {
-    var which = el.innerHTML.toLowerCase();
-    SET = which;
-    
-    save_settings();
-    reset_allowed();
-}
 
-function change_pit(el, canvas, ctx) {
-    var dimensions = el.innerHTML.toLowerCase().split("x");
-    PIT_WIDTH  = parseInt(dimensions[0]);
-    PIT_HEIGHT = parseInt(dimensions[1]);
-    PIT_DEPTH  = parseInt(dimensions[2]);
-    
-    save_settings();
-    
-    init_colors(PIT_DEPTH);
-    
-    reset_pit(3);
-    render_pit(canvas, ctx);
-    
-    reset_allowed();
-}
-
-function change_speed(el) {
-    var speed = parseInt(el.innerHTML);
-    SPEED = speed;
-    AUTOFALL_DELAY = SPEED_MAP[SPEED];
-    
-    save_settings();
-}
 
 function reset_allowed() {
     ALLOWED = [];
@@ -990,30 +962,6 @@ function set_ui_gameover(scorelabel) {
 
 function refresh_score() {
     $("#score").text(pretty_number(STATE.score));
-}
-
-/*****************************************************************************************/
-// Settings
-/*****************************************************************************************/
-function save_settings() {
-    var tmp = SET+":"+PIT_WIDTH+":"+PIT_HEIGHT+":"+PIT_DEPTH+":"+SPEED;
-    $.cookie('co_settings', tmp, { expires: 10000 });
-}
-
-function load_settings() {
-    var tmp = $.cookie('co_settings');
-    if(tmp) {
-        var chunks = tmp.split(":");
-        var set = chunks[0];
-        if(TEMPLATES[set] != undefined) SET = set;
-        
-        PIT_WIDTH  = parseInt(chunks[1]);
-        PIT_HEIGHT = parseInt(chunks[2]);
-        PIT_DEPTH  = parseInt(chunks[3]);
-        
-        SPEED = parseInt(chunks[4]);
-        AUTOFALL_DELAY = SPEED_MAP[SPEED];
-    }
 }
 
 /*****************************************************************************************/
@@ -1065,11 +1013,6 @@ function refresh_column() {
 // Main
 /*****************************************************************************************/
 $(document).ready(function(){
-    copy_keymap(KEYMAP_DEFAULT, KEYMAP);
-    copy_keymap(KEYMAP, KEYMAP_TMP);
-
-    load_settings();
-    
     var xcanvas = $("#screen");
     var canvas = xcanvas.get(0);
     var ctx = canvas.getContext("2d");
@@ -1083,17 +1026,6 @@ $(document).ready(function(){
     reset_allowed();
     
     init_game_keys(canvas, ctx);
-    
-    // difficulty settings
-    $("#pieces .button").each(function() { if($(this).text().toLowerCase()==SET) $(this).addClass("on");});
-    $("#pieces .button").click(function() { change_set($(this).get(0)); $("#pieces .button").removeClass("on"); $(this).addClass("on"); });
-    
-    var pit_string = PIT_WIDTH+"x"+PIT_HEIGHT+"x"+PIT_DEPTH;
-    $("#pit .button").each(function() { if($(this).text().toLowerCase()==pit_string) $(this).addClass("on");});
-    $("#pit .button").click(function() { change_pit($(this).get(0), canvas, ctx); $("#pit .button").removeClass("on"); $(this).addClass("on"); });
-    
-    $("#speed .button").each(function() { if($(this).text().toLowerCase()==SPEED) $(this).addClass("on");});
-    $("#speed .button").click(function() { change_speed($(this).get(0)); $("#speed .button").removeClass("on"); $(this).addClass("on"); });
     
     refresh_column();
 });

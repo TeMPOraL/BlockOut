@@ -16,7 +16,7 @@
     <script type="text/javascript" src="./js/blockout.js"></script>
   </head>
 
-  <body screen_capture_injected="true"> <!-- ?? -->
+  <body>
 
     <center>
       <h1>BlockOut</h1>
@@ -26,31 +26,14 @@
       <div id="screenwrap">
         
         <canvas id="screen" class="shadow" width="500" height="500"><div id="dummy">Sorry, you need to check this page in browser that supports HTML5 canvas (like current version of Chrome, Opera, Firefox or Safari).</div></canvas>
-        
-<!--
-        <div id="difficulty" class="hud">
-          <span id="pieces" title="Change pieces complexity">
-            <span class="button">Flat</span> <span class="button on">Basic</span> <span class="button">Extended</span>
-          </span>
-          <span id="pit" title="Change pit size">
-            <span class="button">3x3x10</span> <span class="button">5x5x10</span> <span class="button on">5x5x12</span>
-          </span>
-          <span id="speed" title="Change game speed">
-            <span class="button">0</span> <span class="button">1</span> <span class="button on">2</span> <span class="button">3</span> <span class="button">4</span>
-          </span>
-          <span id="keys" title="Set custom keys">
-            <span class="button">Keys</span>
-          </span>
-        </div>
--->
 
         <div id="score">&nbsp;</div>
 
         <div id="column" style=""><canvas id="screen2" width="15" height="500"></canvas></div>
         
-        <div id="message" class="hud full">  
+        <div id="message" class="hud full" style="border: none;">  
           <div id="description" class="shadow"> <!-- style="visibility: hidden;">-->
-            Remake of <a href="http://en.wikipedia.org/wiki/Blockout">Blockout (3d tetris)</a> in HTML 5<br>
+            <a href="http://en.wikipedia.org/wiki/Blockout">Blockout</a> w HTML 5 (Canvas)<br>
             <small><br>Works in Firefox, Chrome, Opera and Safari<br>
               Best performance in Chrome and Opera</small>
           </div>

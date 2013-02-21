@@ -9,7 +9,7 @@ var HEIGHT = 500;
 // pit dimensions
 var PIT_WIDTH  = 5;
 var PIT_HEIGHT = 5;
-var PIT_DEPTH  = 13;
+var PIT_DEPTH  = 7;
 
 // fake perspective
 var ZSIZE_X = 30; 
@@ -589,7 +589,6 @@ function pause(canvas, ctx) {
         draw_pit(canvas, ctx, PIT_WIDTH,PIT_HEIGHT,PIT_DEPTH);
         render_layers(canvas, ctx, tmp, 1);
         
-        $("#score").css("display","none");
         $("#column").css("display","none");
         $("#pause").css("display","block");
     }        
@@ -718,7 +717,9 @@ function play_game(canvas, ctx, start_handler) {
     
     STATE.paused = 0;
     STATE.score = 0;
+    STATE.time = 0;
     refresh_score();
+    refresh_time();
     
     STATE.refresh_layers_flag = 1;
     reset(canvas, ctx);
@@ -896,7 +897,6 @@ function set_ui_game() {
     console.log("GAME_START");
     $(".hud").css("display", "none");
     $("#footer").css("display", "none");
-    $("#score").css("display", "block");
     $("#column").css("display", "block");
 }
 
@@ -906,7 +906,6 @@ function set_ui_gameover(scorelabel) {
     $("#finalscore").text(pretty_number(STATE.score));
     $("#column").css("display", "none");
     $(".hud").css("display", "none");
-    $("#score").css("display", "none");
     $("#footer").css("display", "block");
     $("#over").css("display", "block");
     $("#difficulty").css("display", "block");
@@ -914,6 +913,10 @@ function set_ui_gameover(scorelabel) {
 
 function refresh_score() {
     $("#score").text(pretty_number(STATE.score));
+}
+
+function refresh_time() {
+    $("#time").text("TAJM");
 }
 
 /*****************************************************************************************/

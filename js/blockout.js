@@ -48,49 +48,6 @@ var FRAME_DELAY = 10;
 var DELTA = 1;
 var DELTA_ANGLE = Math.PI/2;
 
-// pieces
-var SET = "basic";
-
-// piece shapes
-var TEMPLATES = {
-    
-// Polycubes of order three or four
-"basic": [
-    [ ["x"] ],
-    
-    [ ["xx"] ],
-
-    [ ["xxx"] ],
-
-    [ ["xx",
-       "x "] ],
-       
-    [ ["xxx",
-       " x "] ],
-       
-    [ ["xx ",
-       " xx"] ],
-
-    [ ["xxx",
-       "x  "] ],
-
-    [ ["xx",
-       "x "],
-      [" x",
-       "  "] ],
-
-    [ ["xx",
-       "x "],
-      ["  ",
-       "x "] ],
-
-    [ ["xx",
-       "x "],
-      ["x ",
-       "  "] ]
-]
-};
-
 var KEYMAP = {
 "X+" :39, // right
 "X-" :37, // left
@@ -118,20 +75,13 @@ var COUNTS = [];
 var COLORS = [];
 var ALLOWED = [];
 
-var CACHE_PIT = 0, CACHE_LAYERS = 0, CACHE_SHADOW = 0;
+var CACHE_PIT = 0, CACHE_LAYERS = 0;
 
 var START, END, ELAPSED;
 var ID1 = -1, ID2 = -1;
 
 // game state
 var STATE = {"setkeys":0};
-
-// pause
-var PAUSE_ANIM = 1;
-var PAUSE_WORMS = 1;
-var N_ELEMENTS = 250;
-var PAUSE_ELEMENTS = [];
-var DP = 0;
 
     
 /*****************************************************************************************/
@@ -604,15 +554,6 @@ function log(text) {
 /*****************************************************************************************/
 // Pause magic
 /*****************************************************************************************/
-function init_pause_elements() {
-    for(var i=0; i<N_ELEMENTS; ++i) {
-        var x = rand_range(0, 100*PIT_WIDTH-1)/100;
-        var y = rand_range(0, 100*PIT_HEIGHT-1)/100;
-        var z = rand_range(0, 100*PIT_DEPTH-1)/100;
-        var d = 0.01*rand_range(4, 6);
-        PAUSE_ELEMENTS[i] = [x,y,z,d];
-    }
-}
 
 function pause(canvas, ctx) {
     if(STATE.paused) {

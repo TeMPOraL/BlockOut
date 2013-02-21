@@ -9,20 +9,20 @@ var HEIGHT = 500;
 // pit dimensions
 var PIT_WIDTH  = 5;
 var PIT_HEIGHT = 5;
-var PIT_DEPTH  = 10;
+var PIT_DEPTH  = 13;
 
 // fake perspective
 var ZSIZE_X = 30; 
 var ZSIZE_Y = 30;
 
 // color constants
-var PIECE_COLOR = [50,0,90];
+var PIECE_COLOR = [255, 0, 255];
 var BG_COLOR = "#000";
 
 // cube rendering style
 var CUBE_PLAIN = 0, CUBE_GRADIENT = 1;
 
-var CUBE_STYLE = CUBE_PLAIN;
+var CUBE_STYLE = CUBE_GRADIENT;
 var CUBE_OUTLINE = "#000";
 
 var FORCE_DEPTH_COLOR = 1;
@@ -82,6 +82,12 @@ var ID1 = -1, ID2 = -1;
 
 // game state
 var STATE = {"setkeys":0};
+
+var RESET_SHAPE_NONE = 0;
+var RESET_SHAPE_SQUARE = 1;
+var RESET_SHAPE_CORNER = 2;
+var RESET_SHAPE_PYRAMID_SIDE = 3;
+var RESET_SHAPE_RANDOM = 4;
 
     
 /*****************************************************************************************/
@@ -180,23 +186,22 @@ function init_layers(layers, type) {
                 layers[z][y][x] = 0;
                 
                 switch(type) {
-                case 1:
+                case RESET_SHAPE_SQUARE:
                     if(z>depth-3) layers[z][y][x] = (x > 0 || y > 0) ? 1 : 0;
                     break;
-                case 2:
+                case RESET_SHAPE_CORNER:
                     if(z>depth-2) layers[z][y][x] = (x+y) > 3;
                     break;
-                case 3:
+                case RESET_SHAPE_PYRAMID_SIDE:
                     if(z>=0) layers[z][y][x] = (depth-z) * ((width-x)+(height-y) > z ? 0 : 1);
                     break;
-                case 4:
+                case RESET_SHAPE_RANDOM:
                     if(z>1 && Math.random()>0.95) layers[z][y][x] = c;
                 }
             }
         }
     }    
 }
-
 
 
 /*****************************************************************************************/
@@ -578,7 +583,7 @@ function pause(canvas, ctx) {
         STATE.paused = 1;
         
         var tmp = generate_layers(PIT_WIDTH,PIT_HEIGHT,PIT_DEPTH);
-        init_layers(tmp, 4);
+        init_layers(tmp, RESET_SHAPE_RANDOM);
         FORCE_DEPTH_COLOR = 0;
         
         draw_pit(canvas, ctx, PIT_WIDTH,PIT_HEIGHT,PIT_DEPTH);
@@ -621,6 +626,7 @@ function end_game(canvas, ctx) {
    
     set_ui_gameover('Wynik:');
     init_game_keys(canvas, ctx);
+    console.log("END GAME");
 }
 
 function handle_key(e, canvas, ctx) {
@@ -707,7 +713,7 @@ function handle_key(e, canvas, ctx) {
 function play_game(canvas, ctx, start_handler) {
     $(document).unbind("keydown", start_handler);
     set_ui_game();
-    reset_pit(0);
+    reset_pit(RESET_SHAPE_NONE);
     refresh_column();
     
     STATE.paused = 0;
@@ -818,6 +824,7 @@ function set_start() {
 }
 
 function touchdown() {
+    console.log("TOUCHDOWN");
     STATE.render_piece_flag = 0;
     STATE.refresh_layers_flag = 1;
     
@@ -835,6 +842,7 @@ function new_piece(canvas, ctx) {
 }
 
 function game_over(canvas, ctx) {
+    console.log("GAME OVER");
     render_pit(canvas, ctx);
     end_game(canvas, ctx);
 }
@@ -875,6 +883,7 @@ function reset_allowed() {
 // User interface (macros)
 /*****************************************************************************************/
 function set_ui_start() {
+    console.log("MAIN MENU");
     STATE.setkeys = 0;
     $(".hud").css("display", "none");
     $("#column").css("display", "none");
@@ -884,6 +893,7 @@ function set_ui_start() {
 }
 
 function set_ui_game() {
+    console.log("GAME_START");
     $(".hud").css("display", "none");
     $("#footer").css("display", "none");
     $("#score").css("display", "block");
@@ -891,6 +901,7 @@ function set_ui_game() {
 }
 
 function set_ui_gameover(scorelabel) {
+    console.log("UI GAMEOVER");
     $("#scorelabel").html(scorelabel);
     $("#finalscore").text(pretty_number(STATE.score));
     $("#column").css("display", "none");
@@ -962,7 +973,7 @@ $(document).ready(function(){
     precompute_pieces();
     init_colors(PIT_DEPTH);
     
-    reset_pit(3); 
+    reset_pit(RESET_SHAPE_RANDOM); 
     render_pit(canvas, ctx);
     reset_allowed();
     

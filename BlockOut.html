@@ -19,55 +19,61 @@
 
   <body>
 
-    <center>
-      <h1>BlockOut</h1>
-      
-      <div id="fps">&nbsp;</div>
-      
-      <div id="screenwrap">
+    <center><h1>BlockOut</h1></center>
+    <div style="width: 650px; float:left;">
+      <center> 
         
-        <canvas id="screen" class="shadow" width="500" height="500"><div id="dummy">Sorry, you need to check this page in browser that supports HTML5 canvas (like current version of Chrome, Opera, Firefox or Safari).</div></canvas>
-
-        <div id="score">&nbsp;</div>
-
-        <div id="column" style=""><canvas id="screen2" width="15" height="500"></canvas></div>
+        <div id="fps">&nbsp;</div>
         
-        <div id="message" class="hud full" style="border: none;">  
-          <div id="description" class="shadow"> <!-- style="visibility: hidden;">-->
-            <a href="http://en.wikipedia.org/wiki/Blockout">Blockout</a> w HTML 5 (Canvas)<br>
-            <small><br>Works in Firefox, Chrome, Opera and Safari<br>
-              Best performance in Chrome and Opera</small>
+        <div id="screenwrap">
+          
+          <canvas id="screen" class="shadow" width="600" height="600"><div id="dummy">Sorry, you need to check this page in browser that supports HTML5 canvas (like current version of Chrome, Opera, Firefox or Safari).</div></canvas>
+
+          <div id="score">&nbsp;</div>
+          <div id="time">&nbsp;</div>
+
+          <div id="column" style=""><canvas id="screen2" width="15" height="500"></canvas></div>
+          
+          <div id="message" class="hud full" style="border: none;">  
+            <div id="description" class="shadow"> <!-- style="visibility: hidden;">-->
+              <a href="http://en.wikipedia.org/wiki/Blockout">Blockout</a> w HTML 5 (Canvas)<br>
+              <small><br>Works in Firefox, Chrome, Opera and Safari<br>
+                Best performance in Chrome and Opera</small>
+            </div>
+            
+            <div id="controls">
+              <strong>Obrót</strong>: Q, W, E, A, S, D<br />
+              <strong>Ruch</strong>: strzałki<br />
+              <strong>Zrzut</strong>: spacja<br />
+              <br>
+              <strong>Pauza</strong>: P<br>
+              <strong>Zakończenie gry</strong>: ESC<br>
+              <br>
+              <span class="action">Naciśnij <strong>spację</strong>, by rozpocząć grę</span>
+            </div>
           </div>
           
-          <div id="controls">
-            <strong>Obrót</strong>: Q, W, E, A, S, D<br />
-            <strong>Ruch</strong>: strzałki<br />
-            <strong>Zrzut</strong>: spacja<br />
+          <div id="over" class="hud">
+            <h2>Koniec gry</h2>
             <br>
-            <strong>Pauza</strong>: P<br>
-            <strong>Zakończenie gry</strong>: ESC<br>
+            <span id="scorelabel">Score</span> <span id="finalscore">0</span><br>
             <br>
-            <span class="action">Naciśnij <strong>spację</strong>, by rozpocząć grę</span>
+            <span class="action">Naciśnij <strong>spację</strong>, by zagrać ponownie.</span><br /><br />
+            <span class="action">Naciśnij <strong>ESC</strong>, by powrócić do menu głównego.</span>
           </div>
+          
+          <div id="pause" class="hud">
+            Pauza!
+            <br /><br />
+            <span class="action">Naciśnij <strong>P</strong>, aby kontynuować grę.</span>
+          </div>
+          
         </div>
-      
-        <div id="over" class="hud">
-          <h2>Koniec gry</h2>
-          <br>
-          <span id="scorelabel">Score</span> <span id="finalscore">0</span><br>
-          <br>
-          <span class="action">Naciśnij <strong>spację</strong>, by zagrać ponownie.</span><br /><br />
-          <span class="action">Naciśnij <strong>ESC</strong>, by powrócić do menu głównego.</span>
-        </div>
-        
-        <div id="pause" class="hud">
-          Pauza!
-          <br /><br />
-          <span class="action">Naciśnij <strong>P</strong>, aby kontynuować grę.</span>
-        </div>
-        
-      </div>
-    </center>
+      </center>
+    </div>
+    <div style="float: right; width: 550px;">
+      Dummy!
+    </div>
 
     <div id="layers"></div>
     <div id="log" class="shadow"></div>

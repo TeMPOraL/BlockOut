@@ -7,18 +7,22 @@
 
 ** TODO Add HighCharts.js for some interesting stats.
 
-** TODO Deprettify
+** TODO Deprettify.
+
+** TODO Deprettify pause screen.
+
+** TODO Remove / modify / account for all high-score-related stuff.
 
 * Reqs
 
-** TODO Multiple rounds
+** TODO Multiple rounds.
 
-** TODO Time-limit rounds
+** TODO Time-limit rounds.
 
-** TODO Score histogram
+** TODO Score histogram.
 
-** TODO Speed increase on score rising
+** TODO Speed increase on score rising.
 
 * Additional
 
-** TODO Audio
+** TODO Audio.

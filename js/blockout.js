@@ -109,20 +109,6 @@ var KEYMAP_DEFAULT = {
 "D"  :32  // space
 };
 
-var LABELMAP = {
-"right" :"X+",
-"left"  :"X-",
-"up"    :"Y-",
-"down"  :"Y+",
-"rotate X+":"A+",    
-"rotate X-":"A-",
-"rotate Y+":"B+",    
-"rotate Y-":"B-",
-"rotate Z+":"C+",    
-"rotate Z-":"C-",
-"drop"     :"D"    
-};
-    
 var KEYMAP = {};    
 var KEYMAP_TMP = {};
 var LAST_KEY_EL = 0;
@@ -771,7 +757,6 @@ function init_game_keys(canvas, ctx) {
         if(e.which==27) {
             set_ui_start();
         }
-        set_key(e.which); 
     };
     $(document).keydown(start_handler);
 }

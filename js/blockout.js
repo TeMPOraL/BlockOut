@@ -768,71 +768,12 @@ function pause(canvas, ctx) {
         clearTimeout(ID2);
         STATE.paused = 1;
         
-        if(PAUSE_ANIM) {
-            init_pause_elements();
-            
-            DP = 0;
-            
-            var i,n,d,r,c,h = rand_range(0,360);
-            var bg = "hsl("+(h+30)%360+",90%,5%)";
-            var zsort = function(a,b) { return b[2]-a[2] };
-            var cwidth = canvas.width;
-            var cheight = canvas.height;
-            
-            PAUSE_WORMS = rand_range(0,1);
-            
-            if(PAUSE_WORMS) {
-                c = "hsla("+h+",90%,50%,0.5)";
-                bg = "rgba(0,0,0,0.07)";
-                ctx.fillStyle = "#000";
-                ctx.fillRect(0,0,WIDTH,HEIGHT);
-                n = rand_range(0,1);
-            }
-            
-            ID1 = setInterval(function() {
-                ctx.fillStyle = bg;
-                ctx.fillRect(0,0,WIDTH,HEIGHT);
-                
-                if(!PAUSE_WORMS) PAUSE_ELEMENTS.sort(zsort);
-                for(i=0; i<N_ELEMENTS; ++i) {
-                    
-                    if(!PAUSE_WORMS) c = "hsl("+h+",90%,"+(40*(PIT_DEPTH-PAUSE_ELEMENTS[i][2])/PIT_DEPTH).toFixed(0)+"%)";
-                    else { d = 20*PAUSE_ELEMENTS[i][n]; c = "hsla("+(h+d).toFixed(0)%360+",90%,50%,0.5)"; }
-                    
-                    r = cap(10*(PIT_DEPTH-PAUSE_ELEMENTS[i][2])/PIT_DEPTH,10);
-                    point3d(ctx, cwidth,cheight, PIT_WIDTH,PIT_HEIGHT, PAUSE_ELEMENTS[i], c, r);
-                    
-                    PAUSE_ELEMENTS[i][2] -= PAUSE_ELEMENTS[i][3];
-                    if(!PAUSE_WORMS) {
-                        PAUSE_ELEMENTS[i][0] += 0.01*Math.sin(DP+PAUSE_ELEMENTS[i][2]);
-                        PAUSE_ELEMENTS[i][1] += 0.01*Math.cos(DP+PAUSE_ELEMENTS[i][0]);
-                    }
-                    else {
-                        PAUSE_ELEMENTS[i][0] += 0.005*Math.sin(DP);
-                        PAUSE_ELEMENTS[i][1] += 0.005*Math.cos(DP);
-                    }
-                    if(PAUSE_ELEMENTS[i][2]<-5 || PAUSE_ELEMENTS[i][0]<-10 || PAUSE_ELEMENTS[i][1]<-10 || PAUSE_ELEMENTS[i][0]>PIT_WIDTH+10 || PAUSE_ELEMENTS[i][1]>PIT_HEIGHT+10) {
-                        PAUSE_ELEMENTS[i][2] = PIT_DEPTH;
-                        PAUSE_ELEMENTS[i][0] = rand_range(0, 100*PIT_WIDTH-1)/100;
-                        PAUSE_ELEMENTS[i][1] = rand_range(0, 100*PIT_HEIGHT-1)/100;
-                    }
-                }
-                DP += 0.01;
-            }, FRAME_DELAY);
-            
-            $("#footer").css("display","none");
-        }
+        var tmp = generate_layers(PIT_WIDTH,PIT_HEIGHT,PIT_DEPTH);
+        init_layers(tmp, 4);
+        FORCE_DEPTH_COLOR = 0;
         
-        // simple static random cubes
-        else {
-                
-            var tmp = generate_layers(PIT_WIDTH,PIT_HEIGHT,PIT_DEPTH);
-            init_layers(tmp, 4);
-            FORCE_DEPTH_COLOR = 0;
-        
-            draw_pit(canvas, ctx, PIT_WIDTH,PIT_HEIGHT,PIT_DEPTH);
-            render_layers(canvas, ctx, tmp, 1);
-        }
+        draw_pit(canvas, ctx, PIT_WIDTH,PIT_HEIGHT,PIT_DEPTH);
+        render_layers(canvas, ctx, tmp, 1);
         
         $("#score").css("display","none");
         $("#column").css("display","none");

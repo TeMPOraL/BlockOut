@@ -91,34 +91,6 @@ var TEMPLATES = {
 ]
 };
 
-// controls
-var KEYCODES = {
-8:"backspace",
-9:"tab",
-13:"enter",
-16:"shift",
-17:"control",
-18:"alt", 
-20:"caps lock",    
-27:"escape",
-32:"space",
-33:"page up",
-34:"page down",
-35:"end",
-36:"home",    
-37:"left arrow",
-38:"up arrow",
-39:"right arrow",
-40:"down arrow",
-45:"insert",
-46:"delete",
-59:";",
-188:",",
-189:"-",
-190:".",
-191:"/"
-}
-
 var KEYMAP_DEFAULT = {
 "X+" :39, // right
 "X-" :37, // left
@@ -1148,81 +1120,11 @@ function load_settings() {
 }
 
 /*****************************************************************************************/
-// Custom keys
+// Keys
 /*****************************************************************************************/
-function pretty_key(keycode) {
-    if(keycode>=48 && keycode<=122) return String.fromCharCode(keycode);
-    if(KEYCODES[keycode]!=undefined) return KEYCODES[keycode];
-    return keycode;
-}
-
-function reset_key_labels() {
-    $("#keyset .lbl").each(function() {
-        var label = $(this).text();
-        var val = $(this).parent().find(".val");
-        val.text(pretty_key(KEYMAP_TMP[LABELMAP[label]]));
-    });
-}
-
-function set_key(keycode) {
-    if(LAST_KEY_EL) {
-        var label = LAST_KEY_EL.text();
-        KEYMAP_TMP[LABELMAP[label]] = keycode;
-        LAST_KEY_EL.parent().find(".val").text(pretty_key(keycode));
-    }
-}
-
-function new_key(el) {
-    LAST_KEY_EL = el;
-    $("#keyset .val").removeClass("active");
-    $("#keyset .lbl").removeClass("active");
-    LAST_KEY_EL.addClass("active");
-    LAST_KEY_EL.parent().find(".val").addClass("active");
-}
-
 function copy_keymap(src, dst) {
     for(var i in src)
         dst[i] = src[i];
-}
-
-function accept_keys() {
-    copy_keymap(KEYMAP_TMP, KEYMAP);
-}
-
-function reset_keys() {
-    copy_keymap(KEYMAP_DEFAULT, KEYMAP_TMP);
-    reset_key_labels();
-}
-
-function save_keys() {
-    var tmp = [];
-    for(var i in KEYMAP) tmp.push(i+":"+KEYMAP[i]);
-    $.cookie('co_keymap', tmp.join("|"), { expires: 10000 });
-}
-
-function load_keys() {
-    var tmp = $.cookie('co_keymap');
-    if(tmp) {
-        KEYMAP = {};
-        var key = tmp.split("|");
-        for(var i=0; i<key.length; ++i) {
-            var chunks = key[i].split(":");
-            var label = chunks[0];
-            var value = parseInt(chunks[1]);
-            KEYMAP[label] = value;
-        }
-    }
-}
-
-function change_keys(canvas, ctx) {
-    STATE.setkeys = 1;
-    
-    $(".hud").css("display", "none");
-    $("#score").css("display", "none");
-    $("#keyset").css("display", "block");
-    
-    copy_keymap(KEYMAP, KEYMAP_TMP);
-    reset_key_labels();
 }
 
 
@@ -1270,7 +1172,6 @@ $(document).ready(function(){
     copy_keymap(KEYMAP, KEYMAP_TMP);
 
     load_settings();
-    load_keys();
     
     var xcanvas = $("#screen");
     var canvas = xcanvas.get(0);

@@ -1,0 +1,10 @@
+#+title: BlockOut
+
+Some little hacking done around the http://alteredqualia.com/cubeout/
+blockout.
+
+No, I didn't ask the original author for permission, though I doubt
+he/she would mind. Just playing around with this code to see if I can
+change, refactor and improve it, hopefully learning something along
+the way.
+
